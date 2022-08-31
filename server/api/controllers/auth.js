@@ -11,6 +11,7 @@ module.exports = {
       });
 
       const data = await spotifyApi.authorizationCodeGrant(code);
+
       return res.status(200).json({
         accessToken: data.body.access_token,
         refreshToken: data.body.refresh_token,

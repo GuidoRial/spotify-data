@@ -8,6 +8,4 @@ https://www.npmjs.com/package/highcharts
 
 https://www.npmjs.com/package/webcharts
 
-https://www.npmjs.com/package/highcharts
-
 https://www.npmjs.com/package/apexcharts

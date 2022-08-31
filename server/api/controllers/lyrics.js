@@ -1,3 +1,5 @@
+const lyricsFinder = require("lyrics-finder");
+
 module.exports = {
   async getLyrics(req, res) {
     // Maybe move this to a middleware and analyze lyrics here?

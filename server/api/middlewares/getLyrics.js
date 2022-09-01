@@ -1,7 +1,6 @@
 const lyricsFinder = require("lyrics-finder");
 
 async function getLyrics(req, res, next) {
-  // Maybe move this to a middleware and analyze lyrics here?
   try {
     const lyrics =
       (await lyricsFinder(req.query.artist, req.query.track)) ||

@@ -1,2 +1,3 @@
 const getLyrics = require("./getLyrics");
-module.exports = { getLyrics };
+const getWords = require("./getWords");
+module.exports = { getLyrics, getWords };

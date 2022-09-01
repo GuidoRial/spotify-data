@@ -8,8 +8,9 @@ module.exports = {
     try {
       let language = req.query.language;
       let lyrics = req.lyrics;
+      let lyricsFound = true;
       if (lyrics === "no lyrics found") {
-        return res.status(404).json({ message: lyrics });
+        lyricsFound = false;
       }
       lyricsArray = lyrics.split(" ");
       let songSentimentAnalysis;
@@ -20,7 +21,9 @@ module.exports = {
         songSentimentAnalysis = spanishAnalyzer.getSentiment(lyricsArray);
       }
 
-      return res.status(200).json({ lyrics, songSentimentAnalysis });
+      return res
+        .status(200)
+        .json({ lyrics, songSentimentAnalysis, lyricsFound });
     } catch (e) {
       return res.status(400).json({ message: e.message, stack: e.stack });
     }

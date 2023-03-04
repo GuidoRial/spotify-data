@@ -6,8 +6,8 @@ module.exports = {
       const code = req.body.code;
       const spotifyApi = new SpotifyWebApi({
         redirectUri: "http://localhost:8080/login",
-        clientId: "765707358be3421695e00c9aebb02c4c",
-        clientSecret: "61d25422b5984e9eb9d3c509cac4a22b",
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
       });
 
       const data = await spotifyApi.authorizationCodeGrant(code);

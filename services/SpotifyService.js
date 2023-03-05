@@ -1,11 +1,12 @@
-const axios = require("axios");
+const axios = require('axios');
+const aux = require('../auxiliar');
 
 const SpotifyService = {
   async getSongsOptionsByName(q, options) {
     try {
       let res = await axios.get(`https://api.spotify.com/v1/search?type=track&q=${q}`, options);
       let result = res.data.tracks.items;
-      let tracks = result.map(track => {
+      let tracks = result.map((track) => {
         return {
           songUri: track.uri,
           track_name: track.name,
@@ -49,7 +50,27 @@ const SpotifyService = {
   async getTrackAudioFeatures(id, options) {
     try {
       let res = await axios.get(`https://api.spotify.com/v1/audio-features/${id}`, options);
-      return res.data;
+      const filterCb = ([key, value]) => {
+        if (
+          ![
+            'key',
+            'mode',
+            'tempo',
+            'type',
+            'track_href',
+            'analysis_url',
+            'duration_ms',
+            'time_signature',
+            'speechiness',
+            'liveness',
+            'instrumentalness',
+          ].includes(key)
+        ) {
+          return true;
+        }
+      };
+
+      return aux.filterOutKeys(res.data, filterCb);
     } catch (e) {
       console.log(e.message, e.stack);
       throw e;

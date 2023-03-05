@@ -1,4 +1,4 @@
-const getOptionsObject = (req, res, next) => {
+const getToken = (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
     req.optionsObject = {
       headers: {
@@ -10,4 +10,4 @@ const getOptionsObject = (req, res, next) => {
   return next();
 };
 
-module.exports = getOptionsObject;
+module.exports = getToken;

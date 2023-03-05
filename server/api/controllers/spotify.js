@@ -1,4 +1,4 @@
-const SpotifyService = require("../../../services/SpotifyService");
+const SpotifyService = require('../../../services/SpotifyService');
 
 module.exports = {
   async getSongsOptionsByName(req, res) {
@@ -33,7 +33,7 @@ module.exports = {
   async compareArtistWithItsRelatedArtists(req, res) {
     try {
       const { id } = req.params;
-      const country = "US";
+      const country = 'US';
     } catch (e) {
       return res.status(400).json({ message: e.message, stack: e.stack });
     }

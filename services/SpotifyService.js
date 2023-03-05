@@ -54,7 +54,6 @@ const SpotifyService = {
         if (
           ![
             'key',
-            'mode',
             'tempo',
             'type',
             'track_href',

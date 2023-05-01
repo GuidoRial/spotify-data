@@ -10,6 +10,7 @@ function spotifyRoutes(app) {
     middlewares.getToken,
     controllers.spotify.compareArtistWithItsRelatedArtists
   );
+  app.post('/spotify/me/player', middlewares.getToken, controllers.spotify.handlePlayer);
 }
 
 module.exports = spotifyRoutes;

@@ -1,4 +1,4 @@
-const lyricsFinder = require("lyrics-finder");
+const lyricsFinder = require('lyrics-finder');
 
 async function getWords(req, res, next) {
   try {
@@ -7,16 +7,14 @@ async function getWords(req, res, next) {
     let words = [];
 
     for (let song of songs) {
-      console.log(song);
       const lyrics = (await lyricsFinder(song.artist, song.track)) || null;
 
       if (lyrics) {
         for (let lyric of lyrics.split(/\r\n\s\n/)) {
-          words = [...words, ...lyric.split(" ")];
+          words = [...words, ...lyric.split(' ')];
         }
-        console.log(words);
       } else {
-        console.log("no lyrics :(");
+        console.log('no lyrics :(');
       }
     }
     req.words = words;

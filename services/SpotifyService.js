@@ -1,10 +1,12 @@
 const axios = require('axios');
 const aux = require('../auxiliar');
 
+const BASE_URL = 'https://api.spotify.com/v1';
+
 const SpotifyService = {
   async getSongsOptionsByName(q, options) {
     try {
-      let res = await axios.get(`https://api.spotify.com/v1/search?type=track&q=${q}`, options);
+      let res = await axios.get(`${BASE_URL}/search?type=track&q=${q}`, options);
       let result = res.data.tracks.items;
       let tracks = result.map((track) => {
         return {
@@ -28,7 +30,7 @@ const SpotifyService = {
   },
   async getTrackById(id, options) {
     try {
-      let res = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, options);
+      let res = await axios.get(`${BASE_URL}/tracks/${id}`, options);
       let response = res.data;
       let song = {
         songUri: response.uri,
@@ -49,7 +51,7 @@ const SpotifyService = {
   },
   async getTrackAudioFeatures(id, options) {
     try {
-      let res = await axios.get(`https://api.spotify.com/v1/audio-features/${id}`, options);
+      let res = await axios.get(`${BASE_URL}/audio-features/${id}`, options);
       const filterCb = ([key, value]) => {
         if (
           ![
@@ -73,6 +75,37 @@ const SpotifyService = {
     } catch (e) {
       console.log(e.message, e.stack);
       throw e;
+    }
+  },
+  async getState(options) {
+    const res = await axios.get(`${BASE_URL}/me/player/`, options);
+    return res.data;
+  },
+  async handlePlayer({ action, uri, options }) {
+    const url = `${BASE_URL}/me/player/${action}`;
+
+    try {
+      switch (action) {
+        case 'next':
+        case 'previous':
+          return await axios.post(url, null, options);
+
+        case 'pause':
+          return await axios.put(url, {}, options);
+        case 'play':
+        default: {
+          const songData = { uris: [uri] };
+          if (!uri) {
+            const state = await this.getState(options);
+            songData.uris[0] = state.item.uri;
+            songData.position_ms = state.progress_ms;
+          }
+
+          return await axios.put(url, songData, options);
+        }
+      }
+    } catch (e) {
+      console.log(e);
     }
   },
 };

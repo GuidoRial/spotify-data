@@ -3,7 +3,7 @@ const getToken = (req, res, next) => {
     req.optionsObject = {
       headers: {
         Authorization: req.headers.authorization,
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
     };
   }
